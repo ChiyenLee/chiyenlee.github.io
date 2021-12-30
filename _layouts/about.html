@@ -1,0 +1,19 @@
+---
+layout: default
+---
+
+
+<section>
+    <!-- <div class="page-content"> -->
+        {% if page.profile.image %}
+        <img class="profile {{ page.profile.align }}"  width="20%" src="{{ page.profile.image | prepend: '/assets/img/' | prepend: site.baseurl | prepend: site.url }}">
+        {% endif %}
+      {{ content }}
+    <!-- </div> -->
+
+</section>
+      <!-- {% if page.profile.image %}
+        <img class="profile {{ page.profile.align }}"  width="33.33%" src="{{ page.profile.image | prepend: '/assets/img/' | prepend: site.baseurl | prepend: site.url }}">
+      {% endif %}
+      {{ content }} -->
+

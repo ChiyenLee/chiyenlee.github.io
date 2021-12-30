@@ -1,9 +1,19 @@
 ---
 layout: post
-title: "Text Formatting Examples"
+title: "Underactuated Quadruped Balancing"
 ---
 
-# Markdown Support
+The goal of this project is to implement a controller for a quadruped to balance itself in an underactuated configuration (two feet). I experimented with two approaches for this problem: 
+
+1. Using a centroidal model of the robot, I setup the controller as a convex quadratic program that uses the unconstrained cost-to-go to approximate the optimal constrained policy. 
+2. Using the full floating rigidbody dynamics of the quadruped, I setup the two contact points as algebraic constraints. Then I found the LQR feedback gain using a constrained version of the ricatti recursion. 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/eUapSr-AP9g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+I verified both controller in a simulator I wrote using constrained semi-implicit euler integration. Both implementation, however, requires really accurate (~5mm) knolwedge of the center of mass (CoM) position. I'm currently working on adapting it to hardware. 
+
+
+<!-- # Markdown Support
 
 As always, Jekyll offers support for GitHub Flavored Markdown, which allows you to format your posts using the [Markdown syntax](https://guides.github.com/features/mastering-markdown/). Examples of these text formatting features can be seen below. You can find this post in the `_posts` directory.
 
@@ -150,4 +160,4 @@ More information on Markdown can be found at the following links:
 - [Quick Markdown Example](http://www.unexpected-vortices.com/sw/rippledoc/quick-markdown-example.html)
 - [Markdown Basics](https://daringfireball.net/projects/markdown/basics)
 - [GitHub Flavoured Markdown Spec](https://github.github.com/gfm/)
-- [Basic writing and formatting syntax](https://help.github.com/articles/basic-writing-and-formatting-syntax/#lists)
+- [Basic writing and formatting syntax](https://help.github.com/articles/basic-writing-and-formatting-syntax/#lists) -->

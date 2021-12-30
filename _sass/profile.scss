@@ -1,0 +1,38 @@
+/* Profile */
+
+$on-phone:         450px;
+
+
+@mixin media-query($device) {
+  @media screen and (max-width: $device) {
+      @content;
+  }
+}
+
+.profile {
+    border-style: solid;
+    margin-left: 5rem;
+    margin-right: 1rem;
+    margin-bottom: 3rem;
+    // border-radius: 6px;
+    // border-radius: 50%;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+// adjust tile sizes on smaller screens
+@include media-query($on-phone) {
+  @media screen and (max-width: $on-phone){
+
+    .profile {
+      width: 40%;
+    }
+
+  }
+}
