@@ -1,17 +1,35 @@
 ---
 layout: post
-title: "Underactuated Quadruped Balancing"
+title: "Underactuated Quadruped Balancing on Two Legs"
 ---
 
-The goal of this project is to implement a controller for a quadruped to balance itself in an underactuated configuration (two feet). I experimented with two approaches for this problem: 
+| ![balance](assets/img/quadruped/CoMFinder.png) |
+|:--:|
+| <b> Fig.1 - An Unitree A1 quadruped balancing on two diagonal feet</b>|
 
-1. Using a centroidal model of the robot, I setup the controller as a convex quadratic program that uses the unconstrained cost-to-go to approximate the optimal constrained policy. 
-2. Using the full floating rigidbody dynamics of the quadruped, I setup the two contact points as algebraic constraints. Then I found the LQR feedback gain using a constrained version of the ricatti recursion. 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/eUapSr-AP9g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-I verified both controller in a simulator I wrote using constrained semi-implicit euler integration. Both implementation, however, requires really accurate (~5mm) knolwedge of the center of mass (CoM) position. I'm currently working on adapting it to hardware. 
+ In this project, my goal is to make a quadruped robot balances on its two diagonal legs. Quadruped systems are inherently highly underactuated systems. During a two leg stance like the one shown in Fig. 1, the support polygon collapses into a single support vector, and the robot needs to actively maintain its center of mass (CoM) over the support vector. 
 
+#### Approach
+
+ I experimented with two approaches. In the first approach, I leverged the full floating base rigidbody model of the quadruped. I modeled the two leg balancing dynamics by constraining the two point feet to the ground plane, and then I solved for the state and control equilibrium points with the robot's CoM on the support vector. With the equilibrium points, I linearize the dynamics and found the LQR feedback gain to balance the robot. This apporach works well in simulation, and it can even be applied to balancing scenarios for a quadruped on its hind legs. 
+
+ <iframe width="560" height="315" src="https://www.youtube.com/embed/eUapSr-AP9g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+However, I found that this controller is extremely sensitive to CoM offset in practice. The lack of constraints for friction and torque limits makes the system extremely brittle. In the second approach, I opted to use a simplified centroidal model that ignores leg dynamics. I set up the controller as a convex quadratic program that uses the unconstrained cost-to-go to approximate the optimal constrained policies like in this paper [1]. I use quaternion as the attitude representation, and follows the linearization technique for quaternion as desccribed here [2]. Still, I found the controller to be extremely sensitive to CoM position, and it seems to become unstable whenever the error is more than 5mm. This spawns a whole new research direction for me to identify the CoM of a hardware system. The details of which can be found in here [3], and I was able to identify the CoM position of a hardware robot with 5mm of precision. Using the new CoM offset estimate, I successfully implemented the two leg balancing controller on hardware for a unitree A1 robot. 
+
+#### Experimental Result
+<iframe width="560" height="315" src="https://www.youtube.com/embed/oWS1gqfT1m0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+#### Bibliography
+
+[1] Chignoli, Matthew & Wensing, Patrick. (2020). Variational-Based Optimal Control of Underactuated Balancing for Dynamic Quadrupeds. IEEE Access. PP. 1-1. 10.1109/ACCESS.2020.2980446.
+
+[2] B. E. Jackson, K. Tracy and Z. Manchester, "Planning With Attitude," in IEEE Robotics and Automation Letters, vol. 6, no. 3, pp. 5658-5664, July 2021, doi: 10.1109/LRA.2021.3052431.
+
+[3] C. Lee, and Z. Manchester, “A Quadruped Inertial Param Estimation Method with End-Effectors Bi-sectional Search and Sinusoidal Rotation Excitations”,  ICRA Workshop on Legged Robots, May 2022 
 
 <!-- # Markdown Support
 

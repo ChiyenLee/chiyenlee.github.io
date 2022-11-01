@@ -18,7 +18,7 @@ Assuming the robot is facing upstream, I designed a controller that utilizes a d
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/4V8n4J1TdNQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-#### Transect Controller
+#### River Mapping with ADCP
 While the ASV is traversing the river, the ADCP captures a depth measurement and a set of water velocity measurements at a set of discrete depth points. We then discretized the river into a 2D grid and the water body into a 3D lattice structure. A Kalman filter is then used to interpolate and update a window of cells at the location where the measurement is taken. 
 
 | ![parametric](assets/img/river/lawnmower_parametric.png) |
