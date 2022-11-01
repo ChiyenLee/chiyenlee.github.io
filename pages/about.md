@@ -9,4 +9,4 @@ profile:
 
 ## Hi, I'm Chiyen. 
 
-I am a robotics engineer currently pursuing a Masters degree at Robotics Institute at Carnegie Mellon Univserity, advised by Professor Zach Manchester. I love working with field robots, especially on problems relating to control and state estimation. 
+I am a robotics engineer currently pursuing a Masters degree at Robotics Institute at Carnegie Mellon University, advised by Professor Zach Manchester. I love working with field robots, especially on problems relating to control and state estimation. 
